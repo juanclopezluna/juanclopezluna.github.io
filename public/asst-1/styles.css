@@ -37,8 +37,7 @@ h2 {
 
 .header img {
     display: flex;
-    max-width: 250px;
-    padding-top: 20.15px;
+    max-width: 150px;
   }
 
 .wrapper{
