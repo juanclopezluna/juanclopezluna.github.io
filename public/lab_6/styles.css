@@ -26,6 +26,7 @@ body {
 }
 
 /* Enter YOUR lab styles after this line */
+.header h1,
 .flex-outer li,
 .flex-inner {
   display: flex;
