@@ -17,9 +17,15 @@ function sortFunction(a, b, key) {
   return 0;
 }
 
-document.body.addEventListener('submit', async (e) => {
-  e.preventDefault(); // this stops whatever the browser wanted to do itself.
-  const form = $(e.target).serializeArray(); // here we're using jQuery to serialize the form
+function Randomize(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+document.body.addEventListener('submit', async (evt) => {
+  evt.preventDefault(); // this stops whatever the browser wanted to do itself.
+  const form = $(evt.target).serializeArray(); // here we're using jQuery to serialize the form
   fetch('/api', {
     method: 'POST',
     headers: {
@@ -29,8 +35,27 @@ document.body.addEventListener('submit', async (e) => {
   })
     .then((fromServer) => fromServer.json())
     .then((fromServer) => {
-      // You're going to do your lab work in here. Replace this comment.
-      console.log('fromServer', fromServer);
+      if (document.querySelector('.flex-inner')) {
+        document.querySelector('.flex-inner').remove();
+      }
+      const arr1 = range(10);
+      const arr2 = arr1.map(() => {
+        const number = Randomize(0, 243);
+        return fromServer[number];
+      });
+      
+      const reverseList = arr2.sort((a,b) => sortFunction(b,a,'name'));
+      const orderedlst = document.createElement('ol');
+      orderedlst.className = 'flex-inner';
+      $('form').prepend(orderedlst);
+
+      reverseList.forEach((el, i) => {
+        const li = document.createElement("li");
+        $(li).append(`<input type="checkbox" value=${el.code} id=${el.code} />`);
+        $(li).append(`<label for=${el.code}>${el.name}</label>`);
+        $(orderedlst).append(li);
+      
+      });
     })
     .catch((err) => console.log(err));
 });
