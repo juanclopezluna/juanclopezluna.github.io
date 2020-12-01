@@ -8,10 +8,10 @@ function range(int) {
   return arr;
 }
 
-function sortFunction(a, b, key) {
-  if (a[key] < b[key]) {
+function sortFunction(org, comparison, key) {
+  if (org[key] < comparison[key]) {
     return -1;
-  } if (a[key] > b[key]) {
+  } if (org[key] > comparison[key]) {
     return 1;
   }
   return 0;
@@ -57,5 +57,8 @@ document.body.addEventListener('submit', async (evt) => {
       
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err)
+      // set fave to no
+    });
 });
